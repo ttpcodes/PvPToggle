@@ -13,23 +13,22 @@ import ninja.leaping.configurate.ConfigurationNode;
 public class LoginListener {
 	
 	@Listener
-	public void onClientConnectionJoin(ClientConnectionEvent.Join event) {
-		Messages messages = Messages.getMessages();
+	public void onClientConnection(ClientConnectionEvent.Join event) {
 		Player player = event.getTargetEntity();
 		UUID uuid = player.getUniqueId();
 		ConfigurationNode node = PlayerList.getPlayerList().getNode();
 		if (node.getNode("players", uuid, "pvp") == null) {
 			node.getNode("players", uuid, "pvp").setValue(false);
 			PlayerList.getPlayerList().save();
-			player.sendMessage(messages.disabled);
-			player.sendMessage(messages.toggle);
+			player.sendMessage(Messages.disabled);
+			player.sendMessage(Messages.toggle);
 		} else {
 			if (node.getNode("players", uuid.toString(), "pvp").getBoolean() == false) {
-				player.sendMessage(messages.disabled);
-				player.sendMessage(messages.toggle);
+				player.sendMessage(Messages.disabled);
+				player.sendMessage(Messages.toggle);
 			} else {
-				player.sendMessage(messages.enabled);
-				player.sendMessage(messages.toggle);
+				player.sendMessage(Messages.enabled);
+				player.sendMessage(Messages.toggle);
 			}
 		}
 	}

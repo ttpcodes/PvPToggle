@@ -2,6 +2,8 @@ package io.tehtotalpwnage.pvptoggle;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Set;
+import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
@@ -13,10 +15,12 @@ import org.spongepowered.api.event.game.state.GamePreInitializationEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.text.Text;
 
+import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
 import io.tehtotalpwnage.pvptoggle.configs.PlayerList;
 import io.tehtotalpwnage.pvptoggle.listeners.LoginListener;
+import io.tehtotalpwnage.pvptoggle.listeners.MovementListener;
 import io.tehtotalpwnage.pvptoggle.listeners.PvPListener;
 import io.tehtotalpwnage.pvptoggle.utils.CommandToggle;
 
@@ -32,6 +36,8 @@ public class PvPToggle {
 	
 	@Inject
 	private Logger logger;
+	
+	public static Set<UUID> togglePlayers = Sets.newHashSet();
 	
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event) {
@@ -55,6 +61,7 @@ public class PvPToggle {
 		logger.info("Registering listeners...");
 		try {
 			Sponge.getEventManager().registerListeners(this, new LoginListener());
+			Sponge.getEventManager().registerListeners(this, new MovementListener());
 			Sponge.getEventManager().registerListeners(this, new PvPListener());
 			logger.info("Successfully registered listeners.");
 		} catch (Exception e) {
