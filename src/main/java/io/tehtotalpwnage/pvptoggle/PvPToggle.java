@@ -24,7 +24,7 @@ import io.tehtotalpwnage.pvptoggle.listeners.MovementListener;
 import io.tehtotalpwnage.pvptoggle.listeners.PvPListener;
 import io.tehtotalpwnage.pvptoggle.utils.CommandToggle;
 
-@Plugin(id = "io.tehtotalpwnage.pvptoggle", name = "PvPToggle", version = "1.0")
+@Plugin(id = "io.tehtotalpwnage.pvptoggle", name = "PvPToggle", version = "1.0.1")
 
 public class PvPToggle {
 	

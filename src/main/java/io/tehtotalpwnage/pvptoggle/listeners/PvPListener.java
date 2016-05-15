@@ -16,7 +16,6 @@ public class PvPListener {
 	
 	@Listener
 	public void onDamageEntity(DamageEntityEvent event) {
-		Messages messages = Messages.getMessages();
 		ConfigurationNode node = PlayerList.getPlayerList().getNode();
 		Entity entityTarget = event.getTargetEntity();
 		Optional<EntityDamageSource> optionalCause = event.getCause().first(EntityDamageSource.class);
@@ -31,16 +30,16 @@ public class PvPListener {
 			if (!node.getNode("players", cause.getUniqueId(), "pvp").getBoolean()) {
 				if (entityTarget.getType() == EntityTypes.PLAYER) {
 					event.setCancelled(true);
-					cause.sendMessage(messages.attacker);
-					cause.sendMessage(messages.toggle);
+					cause.sendMessage(Messages.attacker);
+					cause.sendMessage(Messages.toggle);
 					return;
 				}
 			} else if (entityTarget.getType() == EntityTypes.PLAYER) {
 				Player target = (Player) entityTarget;
 				if (!node.getNode("players", target.getUniqueId(), "pvp").getBoolean()) {
 						event.setCancelled(true);
-						cause.sendMessage(messages.target);
-						target.sendMessage(messages.attacked);
+						cause.sendMessage(Messages.target);
+						target.sendMessage(Messages.attacked);
 						return;
 				}
 			}
