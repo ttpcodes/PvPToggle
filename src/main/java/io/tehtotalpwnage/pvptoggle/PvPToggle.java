@@ -23,8 +23,10 @@ import io.tehtotalpwnage.pvptoggle.listeners.LoginListener;
 import io.tehtotalpwnage.pvptoggle.listeners.MovementListener;
 import io.tehtotalpwnage.pvptoggle.listeners.PvPListener;
 import io.tehtotalpwnage.pvptoggle.utils.CommandToggle;
+import io.tehtotalpwnage.pvptoggle.utils.PluginInfo;
 
-@Plugin(id = "io.tehtotalpwnage.pvptoggle", name = "PvPToggle", version = "1.0.1")
+@Plugin(authors = PluginInfo.AUTHOR, description = PluginInfo.DESCRIPTION, id = PluginInfo.ID, 
+	name = PluginInfo.NAME, url = PluginInfo.URL, version = PluginInfo.VERSION)
 
 public class PvPToggle {
 	

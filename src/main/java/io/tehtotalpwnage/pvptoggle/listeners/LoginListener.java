@@ -8,6 +8,7 @@ import org.spongepowered.api.event.network.ClientConnectionEvent;
 
 import io.tehtotalpwnage.pvptoggle.configs.PlayerList;
 import io.tehtotalpwnage.pvptoggle.utils.Messages;
+import io.tehtotalpwnage.pvptoggle.utils.TranslationHelper;
 import ninja.leaping.configurate.ConfigurationNode;
 
 public class LoginListener {
@@ -17,18 +18,18 @@ public class LoginListener {
 		Player player = event.getTargetEntity();
 		UUID uuid = player.getUniqueId();
 		ConfigurationNode node = PlayerList.getPlayerList().getNode();
-		if (node.getNode("players", uuid, "pvp") == null) {
+		if (node.getNode("players", uuid, "pvp").isVirtual()) {
 			node.getNode("players", uuid, "pvp").setValue(false);
 			PlayerList.getPlayerList().save();
-			player.sendMessage(Messages.disabled);
-			player.sendMessage(Messages.toggle);
+			player.sendMessage(TranslationHelper.t("disabled"));
+			player.sendMessage(TranslationHelper.t("toggle"));
 		} else {
-			if (node.getNode("players", uuid.toString(), "pvp").getBoolean() == false) {
-				player.sendMessage(Messages.disabled);
-				player.sendMessage(Messages.toggle);
+			if (node.getNode("players", uuid.toString(), "pvp").getBoolean()) {
+				player.sendMessage(TranslationHelper.t("enabled"));
+				player.sendMessage(TranslationHelper.t("toggle"));
 			} else {
-				player.sendMessage(Messages.enabled);
-				player.sendMessage(Messages.toggle);
+				player.sendMessage(TranslationHelper.t("disabled"));
+				player.sendMessage(TranslationHelper.t("toggle"));
 			}
 		}
 	}

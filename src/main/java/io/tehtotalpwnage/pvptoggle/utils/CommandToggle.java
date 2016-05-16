@@ -22,7 +22,7 @@ public class CommandToggle implements CommandExecutor {
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			PvPToggle.togglePlayers.add(player.getUniqueId());
-			player.sendMessage(Messages.command);
+			player.sendMessage(TranslationHelper.t("command"));
 			ConfigurationNode node = PlayerList.getPlayerList().getNode()
 				.getNode("players", player.getUniqueId(), "pvp");
 			Sponge.getScheduler().createTaskBuilder().execute(() -> {
@@ -31,13 +31,13 @@ public class CommandToggle implements CommandExecutor {
 						if (node.getNode("players", player.getUniqueId(), "pvp").getBoolean()) {
 							node.getNode("players", player.getUniqueId(), "pvp").setValue(false);
 							PlayerList.getPlayerList().save();
-							player.sendMessage(Messages.disabled);
-							player.sendMessage(Messages.toggle);
+							player.sendMessage(TranslationHelper.t("disabled"));
+							player.sendMessage(TranslationHelper.t("toggle"));
 						} else {
 							node.getNode("players", player.getUniqueId(), "pvp").setValue(true);
 							PlayerList.getPlayerList().save();
-							player.sendMessage(Messages.enabled);
-							player.sendMessage(Messages.toggle);
+							player.sendMessage(TranslationHelper.t("enabled"));
+							player.sendMessage(TranslationHelper.t("toggle"));
 						}
 					}
 				}).delay(10, TimeUnit.SECONDS).name("PvPToggle - Toggle PvP Status")
