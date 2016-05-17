@@ -1,5 +1,6 @@
 package io.tehtotalpwnage.pvptoggle.utils;
 
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import org.spongepowered.api.Sponge;
@@ -19,33 +20,54 @@ public class CommandToggle implements CommandExecutor {
 	
 	@Override
 	public CommandResult execute(CommandSource src, CommandContext args) throws CommandException {
+		ConfigurationNode node;
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			PvPToggle.togglePlayers.add(player.getUniqueId());
-			player.sendMessage(TranslationHelper.t("command"));
-			ConfigurationNode node = PlayerList.getPlayerList().getNode()
+			player.sendMessage(TranslationHelper.t("messages.player.command"));
+			node = PlayerList.getPlayerList().getNode()
 				.getNode("players", player.getUniqueId(), "pvp");
 			Sponge.getScheduler().createTaskBuilder().execute(() -> {
 					if (PvPToggle.togglePlayers.contains(player.getUniqueId())) {
 						PvPToggle.togglePlayers.remove(player.getUniqueId());
-						if (node.getNode("players", player.getUniqueId(), "pvp").getBoolean()) {
-							node.getNode("players", player.getUniqueId(), "pvp").setValue(false);
+						if (node.getBoolean()) {
+							node.setValue(false);
 							PlayerList.getPlayerList().save();
-							player.sendMessage(TranslationHelper.t("disabled"));
-							player.sendMessage(TranslationHelper.t("toggle"));
+							player.sendMessage(TranslationHelper.t("messages.player.disabled"));
+							player.sendMessage(TranslationHelper.t("messages.player.toggle"));
 						} else {
-							node.getNode("players", player.getUniqueId(), "pvp").setValue(true);
+							node.setValue(true);
 							PlayerList.getPlayerList().save();
-							player.sendMessage(TranslationHelper.t("enabled"));
-							player.sendMessage(TranslationHelper.t("toggle"));
+							player.sendMessage(TranslationHelper.t("messages.player.enabled"));
+							player.sendMessage(TranslationHelper.t("messages.player.toggle"));
 						}
 					}
 				}).delay(10, TimeUnit.SECONDS).name("PvPToggle - Toggle PvP Status")
 				.submit(Sponge.getPluginManager().getPlugin("io.tehtotalpwnage.pvptoggle")
 				.get().getInstance().get());
 		} else {
-			src.sendMessage(Text.of("This command must be run by a player!"));
-			return CommandResult.success();
+			Optional<Player> optionalPlayer = args.<Player> getOne("player");
+			if (optionalPlayer.isPresent()) {
+				Player player = optionalPlayer.get();
+				node = PlayerList.getPlayerList().getNode()
+					.getNode("players", player.getUniqueId(), "pvp");
+				if (node.getBoolean()) {
+					node.setValue(false);
+					PlayerList.getPlayerList().save();
+					player.sendMessage(TranslationHelper.t("messages.player.console"));
+					player.sendMessage(TranslationHelper.t("messages.player.disabled"));
+					player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+				} else {
+					node.setValue(true);
+					PlayerList.getPlayerList().save();
+					player.sendMessage(TranslationHelper.t("messages.player.console"));
+					player.sendMessage(TranslationHelper.t("messages.player.enabled"));
+					player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+				}
+				return CommandResult.success();
+			} else {
+				throw new CommandException(Text.of("A player argument is required when running from console or command block!"));
+			}
 		}
 		return CommandResult.success();
 	}

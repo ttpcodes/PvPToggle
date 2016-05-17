@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.slf4j.Logger;
 import org.spongepowered.api.Sponge;
+import org.spongepowered.api.command.args.GenericArguments;
 import org.spongepowered.api.command.spec.CommandSpec;
 import org.spongepowered.api.config.ConfigDir;
 import org.spongepowered.api.event.Listener;
@@ -74,6 +75,7 @@ public class PvPToggle {
 			CommandSpec toggle = CommandSpec.builder()
 				.description(Text.of("Toggles PvP status for the player."))
 				.permission("pvptoggle.toggle")
+				.arguments(GenericArguments.optional(GenericArguments.player(Text.of("player"))))
 				.executor(new CommandToggle())
 				.build();
 			Sponge.getCommandManager().register(this, toggle, "pvp");

@@ -14,13 +14,13 @@ public class TranslationHelper {
 		@Nullable
 		@Override
 		public ResourceBundle apply(Locale input) {
-			return ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.utils.Messages", input);
+			return ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.lang.Messages", input);
 		}
 	};
 
 	private TranslationHelper() {} // Prevent instance creation
 
 	public static Text t(String key, Object... args) {
-			return Text.of(new ResourceBundleTranslation(key, LOOKUP_FUNC), args);
+			return Text.of(new ResourceBundleTranslation(key, LOOKUP_FUNC).get(Locale.getDefault()));
 	}
 }

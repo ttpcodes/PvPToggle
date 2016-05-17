@@ -10,7 +10,6 @@ import org.spongepowered.api.world.Location;
 import org.spongepowered.api.world.World;
 
 import io.tehtotalpwnage.pvptoggle.PvPToggle;
-import io.tehtotalpwnage.pvptoggle.utils.Messages;
 import io.tehtotalpwnage.pvptoggle.utils.TranslationHelper;
 
 public class MovementListener {
@@ -26,7 +25,7 @@ public class MovementListener {
 						|| location.getY() != newLocation.getY() 
 						|| location.getZ() != newLocation.getZ()) {
 							PvPToggle.togglePlayers.remove(player.getUniqueId());
-							player.sendMessage(TranslationHelper.t("commandCancelled"));
+							player.sendMessage(TranslationHelper.t("messages.player.commandCancelled"));
 					}
 				}
 			}).delay(1, TimeUnit.SECONDS).name("PvPToggle - Get Movement Change")
