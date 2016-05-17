@@ -24,7 +24,7 @@ public class CommandToggle implements CommandExecutor {
 		if (src instanceof Player) {
 			Player player = (Player) src;
 			PvPToggle.togglePlayers.add(player.getUniqueId());
-			player.sendMessage(TranslationHelper.t("messages.player.command"));
+			player.sendMessage(TranslationHelper.t("messages.player.command", player.getLocale()));
 			node = PlayerList.getPlayerList().getNode()
 				.getNode("players", player.getUniqueId(), "pvp");
 			Sponge.getScheduler().createTaskBuilder().execute(() -> {
@@ -33,13 +33,13 @@ public class CommandToggle implements CommandExecutor {
 						if (node.getBoolean()) {
 							node.setValue(false);
 							PlayerList.getPlayerList().save();
-							player.sendMessage(TranslationHelper.t("messages.player.disabled"));
-							player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+							player.sendMessage(TranslationHelper.t("messages.player.disabled", player.getLocale()));
+							player.sendMessage(TranslationHelper.t("messages.player.toggle", player.getLocale()));
 						} else {
 							node.setValue(true);
 							PlayerList.getPlayerList().save();
-							player.sendMessage(TranslationHelper.t("messages.player.enabled"));
-							player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+							player.sendMessage(TranslationHelper.t("messages.player.enabled", player.getLocale()));
+							player.sendMessage(TranslationHelper.t("messages.player.toggle", player.getLocale()));
 						}
 					}
 				}).delay(10, TimeUnit.SECONDS).name("PvPToggle - Toggle PvP Status")
@@ -54,15 +54,15 @@ public class CommandToggle implements CommandExecutor {
 				if (node.getBoolean()) {
 					node.setValue(false);
 					PlayerList.getPlayerList().save();
-					player.sendMessage(TranslationHelper.t("messages.player.console"));
-					player.sendMessage(TranslationHelper.t("messages.player.disabled"));
-					player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+					player.sendMessage(TranslationHelper.t("messages.player.console", player.getLocale()));
+					player.sendMessage(TranslationHelper.t("messages.player.disabled", player.getLocale()));
+					player.sendMessage(TranslationHelper.t("messages.player.toggle", player.getLocale()));
 				} else {
 					node.setValue(true);
 					PlayerList.getPlayerList().save();
-					player.sendMessage(TranslationHelper.t("messages.player.console"));
-					player.sendMessage(TranslationHelper.t("messages.player.enabled"));
-					player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+					player.sendMessage(TranslationHelper.t("messages.player.console", player.getLocale()));
+					player.sendMessage(TranslationHelper.t("messages.player.enabled", player.getLocale()));
+					player.sendMessage(TranslationHelper.t("messages.player.toggle", player.getLocale()));
 				}
 				return CommandResult.success();
 			} else {

@@ -20,7 +20,7 @@ public class TranslationHelper {
 
 	private TranslationHelper() {} // Prevent instance creation
 
-	public static Text t(String key, Object... args) {
-			return Text.of(new ResourceBundleTranslation(key, LOOKUP_FUNC).get(Locale.getDefault()));
+	public static Text t(String key, Locale locale, Object... args) {
+			return Text.of(new ResourceBundleTranslation(key, LOOKUP_FUNC).get(locale));
 	}
 }

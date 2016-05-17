@@ -20,15 +20,15 @@ public class LoginListener {
 		if (node.getNode("players", uuid, "pvp").isVirtual()) {
 			node.getNode("players", uuid, "pvp").setValue(false);
 			PlayerList.getPlayerList().save();
-			player.sendMessage(TranslationHelper.t("messages.player.disabled"));
-			player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+			player.sendMessage(TranslationHelper.t("messages.player.disabled", player.getLocale()));
+			player.sendMessage(TranslationHelper.t("messages.player.toggle", player.getLocale()));
 		} else {
 			if (node.getNode("players", uuid.toString(), "pvp").getBoolean()) {
-				player.sendMessage(TranslationHelper.t("messages.player.enabled"));
-				player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+				player.sendMessage(TranslationHelper.t("messages.player.enabled", player.getLocale()));
+				player.sendMessage(TranslationHelper.t("messages.player.toggle", player.getLocale()));
 			} else {
-				player.sendMessage(TranslationHelper.t("messages.player.disabled"));
-				player.sendMessage(TranslationHelper.t("messages.player.toggle"));
+				player.sendMessage(TranslationHelper.t("messages.player.disabled", player.getLocale()));
+				player.sendMessage(TranslationHelper.t("messages.player.toggle", player.getLocale()));
 			}
 		}
 	}
