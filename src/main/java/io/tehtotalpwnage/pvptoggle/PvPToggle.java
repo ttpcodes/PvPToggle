@@ -31,7 +31,10 @@ import io.tehtotalpwnage.pvptoggle.utils.PluginInfo;
 
 public class PvPToggle {
 	
-	private static PvPToggle pvptoggle = new PvPToggle();
+	private static PvPToggle pvptoggle;
+	public static PvPToggle instance() {
+		return pvptoggle;
+	}
 	
 	@Inject
 	@ConfigDir(sharedRoot = false)

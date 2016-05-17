@@ -21,6 +21,7 @@ public class TranslationHelper {
 	private TranslationHelper() {} // Prevent instance creation
 
 	public static Text t(String key, Locale locale, Object... args) {
-			return Text.of(new ResourceBundleTranslation(key, LOOKUP_FUNC).get(locale));
+		return Text.of(new ResourceBundleTranslation(key, LOOKUP_FUNC).get(locale));
+//		return new ResourceBundletranslation(key, LOOKUP_FUNC).get(locale));
 	}
 }
