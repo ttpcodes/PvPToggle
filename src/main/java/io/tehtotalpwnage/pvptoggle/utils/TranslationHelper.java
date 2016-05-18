@@ -19,9 +19,18 @@ public class TranslationHelper {
 	};
 
 	private TranslationHelper() {} // Prevent instance creation
+	
+	public static String s(String key, Locale locale, Object...args) {
+		return new ResourceBundleTranslation(key, LOOKUP_FUNC).get(locale);
+	}
 
 	public static Text t(String key, Locale locale, Object... args) {
 		return Text.of(new ResourceBundleTranslation(key, LOOKUP_FUNC).get(locale));
-//		return new ResourceBundletranslation(key, LOOKUP_FUNC).get(locale));
 	}
+	
+	public static Text text(String key, Locale locale, Object... args) {
+		ResourceBundle bundle =  ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.lang.Messages", locale);
+		return (Text) bundle.getObject(key);
+	}
+
 }

@@ -25,7 +25,7 @@ public class MovementListener {
 						|| location.getY() != newLocation.getY() 
 						|| location.getZ() != newLocation.getZ()) {
 							PvPToggle.togglePlayers.remove(player.getUniqueId());
-							player.sendMessage(TranslationHelper.t("messages.player.commandCancelled", player.getLocale()));
+							player.sendMessage(TranslationHelper.t("player.commandCancelled", player.getLocale()));
 					}
 				}
 			}).delay(1, TimeUnit.SECONDS).name("PvPToggle - Get Movement Change")

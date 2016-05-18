@@ -12,46 +12,47 @@ import ninja.leaping.configurate.loader.ConfigurationLoader;
 
 public class PlayerList {
 	
-	private static PlayerList playerlist = new PlayerList();
-	public static PlayerList getPlayerList() {
-		return playerlist;
+	private static PlayerList instance = new PlayerList();
+	public static PlayerList getInstance() {
+		return instance;
 	}
-
-	private ConfigurationNode rootNode;
-	ConfigurationLoader<CommentedConfigurationNode> loader;
 	
-	public void loadPlayerList(PvPToggle plugin) {
-		plugin.getLogger().info("Loading player list...");
-		Path potentialFile = Paths.get(plugin.getConfigPath() + "/playerlist.conf");
-		loader = HoconConfigurationLoader.builder()
-				.setPath(potentialFile).build();
-		if(!Files.exists(potentialFile)) {
-			plugin.getLogger().info("Player list doesn't exist. Creating player list...");
+	public ConfigurationNode getNode() {
+		return rootNode;
+	}
+	
+	private String file = "playerlist.conf";
+	private Path path = Paths.get(PvPToggle.getInstance().getConfigPath() + "/" + file);
+	private ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder()
+		.setPath(path).build();
+	private ConfigurationNode rootNode;
+	
+	public void load() {
+		PvPToggle.getInstance().getLogger().info("Loading player list...");
+		if(!Files.exists(path)) {
+			PvPToggle.getInstance().getLogger().info("Player list doesn't exist. Creating player list...");
 			try {
-				Files.createFile(potentialFile);
-				plugin.getLogger().info("Created player list at " + potentialFile);
+				Files.createFile(path);
+				PvPToggle.getInstance().getLogger().info("Created player list at " + path);
 			} catch (Exception e) {
-				plugin.getLogger().error("Error occured on creating player list: " + e.getMessage());
+				PvPToggle.getInstance().getLogger().error("Error occured on creating player list: " + e.getMessage());
 			}
 		}
 		try {
 			rootNode = loader.load();
 			loader.save(rootNode);
-			plugin.getLogger().info("Player list loaded from " + potentialFile);
+			PvPToggle.getInstance().getLogger().info("Player list loaded from " + path);
 		} catch (Exception e) {
-			plugin.getLogger().error("Error occured on loading player list: " + e.getMessage());
+			PvPToggle.getInstance().getLogger().error("Error occured on loading player list: " + e.getMessage());
 		}
 	}
 	public void save() {
 		try {
-//			plugin.getLogger().info("Saving player list...");
+			PvPToggle.getInstance().getLogger().info("Saving player list...");
 			loader.save(rootNode);
-//			plugin.getLogger().info("Player list saved.");
+			PvPToggle.getInstance().getLogger().info("Player list saved.");
 		} catch (Exception e) {
-//			plugin.getLogger().info("Error occured on saving player list: " + e.getMessage());
+			PvPToggle.getInstance().getLogger().info("Error occured on saving player list: " + e.getMessage());
 		}
-	}
-	public ConfigurationNode getNode() {
-		return rootNode;
 	}
 }

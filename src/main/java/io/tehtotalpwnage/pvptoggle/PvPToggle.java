@@ -2,6 +2,7 @@ package io.tehtotalpwnage.pvptoggle;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Locale;
 import java.util.Set;
 import java.util.UUID;
 
@@ -19,45 +20,55 @@ import org.spongepowered.api.text.Text;
 import com.google.common.collect.Sets;
 import com.google.inject.Inject;
 
+import io.tehtotalpwnage.pvptoggle.configs.Config;
 import io.tehtotalpwnage.pvptoggle.configs.PlayerList;
 import io.tehtotalpwnage.pvptoggle.listeners.LoginListener;
 import io.tehtotalpwnage.pvptoggle.listeners.MovementListener;
 import io.tehtotalpwnage.pvptoggle.listeners.PvPListener;
 import io.tehtotalpwnage.pvptoggle.utils.CommandToggle;
 import io.tehtotalpwnage.pvptoggle.utils.PluginInfo;
+import io.tehtotalpwnage.pvptoggle.utils.TranslationHelper;
 
 @Plugin(authors = PluginInfo.AUTHOR, description = PluginInfo.DESCRIPTION, id = PluginInfo.ID, 
 	name = PluginInfo.NAME, url = PluginInfo.URL, version = PluginInfo.VERSION)
 
 public class PvPToggle {
 	
-	private static PvPToggle pvptoggle;
-	public static PvPToggle instance() {
-		return pvptoggle;
+	@Inject
+	@ConfigDir(sharedRoot = false)
+	private Path path;
+	public Path getConfigPath() {
+		return path;
 	}
 	
 	@Inject
-	@ConfigDir(sharedRoot = false)
-	private Path privateConfigDir;
-	
-	@Inject
 	private Logger logger;
+	public Logger getLogger() {
+		return logger;
+	}
+	
+	private static PvPToggle instance;
+	public static PvPToggle getInstance() {
+		return instance;
+	}
 	
 	public static Set<UUID> togglePlayers = Sets.newHashSet();
 	
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event) {
+		instance = this;
 		logger.info("Running preloading of PvPToggle version 1.0");
-		if (!Files.exists(privateConfigDir)) {
+		if (!Files.exists(path)) {
 			logger.info("Config directory doesn't exist. Creating config directory...");
 			try {
-				Files.createDirectories(privateConfigDir);
+				Files.createDirectories(path);
 				logger.info("Created config directory at " + getConfigPath());
 			} catch (Exception e) {
 				logger.error("Error occured on creating config directory: " + e.getMessage());
 			}
 		}
-		PlayerList.getPlayerList().loadPlayerList(this);
+		Config.getInstance().load();
+		PlayerList.getInstance().load();
 		logger.info("Preloading completed.");
 	}
 	
@@ -86,19 +97,7 @@ public class PvPToggle {
 		} catch (Exception e) {
 			logger.info("Error on registering PvP command: " + e.getMessage());
 		}
-		logger.info("PvPToggle version 1.0 loaded successfully.");
+		logger.info(TranslationHelper.s("console.initComplete",
+			new Locale(Config.getInstance().getNode().getNode("locale").getValue().toString())));
 	}
-	
-	public static PvPToggle getPvPToggle() {
-		return pvptoggle;
-	}
-	
-	public Logger getLogger() {
-		return logger;
-	}
-	
-	public Path getConfigPath() {
-		return privateConfigDir;
-	}
-	
 }

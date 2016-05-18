@@ -16,23 +16,23 @@ public class PvPListener {
 	
 	@Listener
 	public void onDamageEntity(DamageEntityEvent event, @First EntityDamageSource source) {
-		ConfigurationNode node = PlayerList.getPlayerList().getNode();
+		ConfigurationNode node = PlayerList.getInstance().getNode();
 		Entity entityTarget = event.getTargetEntity();
 		if (source.getSource().getType() == EntityTypes.PLAYER) {
 			Player cause = (Player) source.getSource();
 			if (!node.getNode("players", cause.getUniqueId(), "pvp").getBoolean()) {
 				if (entityTarget.getType() == EntityTypes.PLAYER) {
 					event.setCancelled(true);
-					cause.sendMessage(TranslationHelper.t("messages.player.attacker", cause.getLocale()));
-					cause.sendMessage(TranslationHelper.t("messages.player.toggle", cause.getLocale()));
+					cause.sendMessage(TranslationHelper.t("player.attacker", cause.getLocale()));
+					cause.sendMessage(TranslationHelper.t("player.toggle", cause.getLocale()));
 					return;
 				}
 			} else if (entityTarget.getType() == EntityTypes.PLAYER) {
 				Player target = (Player) entityTarget;
 				if (!node.getNode("players", target.getUniqueId(), "pvp").getBoolean()) {
 						event.setCancelled(true);
-						cause.sendMessage(TranslationHelper.t("messages.player.target", cause.getLocale()));
-						target.sendMessage(TranslationHelper.t("messages.player.attacked", cause.getLocale()));
+						cause.sendMessage(TranslationHelper.t("player.target", cause.getLocale()));
+						target.sendMessage(TranslationHelper.t("player.attacked", cause.getLocale()));
 						return;
 				}
 			}
