@@ -4,6 +4,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+import org.slf4j.Logger;
+
 import io.tehtotalpwnage.pvptoggle.PvPToggle;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
@@ -20,6 +22,8 @@ public class Config {
 		return rootNode;
 	}
 	
+	private Logger logger = PvPToggle.getInstance().getLogger();
+	
 	private String file = "config.conf";
 	private Path path = Paths.get(PvPToggle.getInstance().getConfigPath() + "/" + file);
 	private ConfigurationLoader<CommentedConfigurationNode> loader = HoconConfigurationLoader.builder()
@@ -27,34 +31,46 @@ public class Config {
 	private CommentedConfigurationNode rootNode;
 	
 	public void load() {
-		PvPToggle.getInstance().getLogger().info("Loading config...");
+		logger.info("Loading config...");
 		if(!Files.exists(path)) {
-			PvPToggle.getInstance().getLogger().info("Config doesn't exist. Creating player list...");
+			logger.info("Config doesn't exist. Creating config...");
 			try {
 				Files.createFile(path);
-				PvPToggle.getInstance().getLogger().info("Created player list at " + path);
+				logger.info("Created config at " + path);
+				rootNode = loader.load();
 				rootNode.getNode("locale").setValue("en")
 					.setComment("The two letter language code for a locale. Default is 'en'.");
-				PvPToggle.getInstance().getLogger().info("Populated inital config at " + path);
+				loader.save(rootNode);
+				logger.info("Populated inital config at " + path);
 			} catch (Exception e) {
-				PvPToggle.getInstance().getLogger().error("Error occured on creating config: " + e.getMessage());
+				logger.error("Error occured on creating config: " + e.getMessage());
+			}
+		} else {
+			try {
+				rootNode = loader.load();
+				loader.save(rootNode);
+				logger.info("Config loaded from " + path);
+			} catch (Exception e) {
+				logger.error("Error occured on loading config: " + e.getMessage());
 			}
 		}
-		try {
-			rootNode = loader.load();
-			loader.save(rootNode);
-			PvPToggle.getInstance().getLogger().info("Config loaded from " + path);
-		} catch (Exception e) {
-			PvPToggle.getInstance().getLogger().error("Error occured on loading config: " + e.getMessage());
+	}
+	
+	public void loadLocale() {
+		if(Files.exists(path)) {
+			
+		} else {
+			logger.error("Error loading locale from configuration file (First run perhaps?)");
 		}
 	}
+	
 	public void save() {
 		try {
-			PvPToggle.getInstance().getLogger().info("Saving config...");
+			logger.info("Saving config...");
 			loader.save(rootNode);
-			PvPToggle.getInstance().getLogger().info("Config saved.");
+			logger.info("Config saved.");
 		} catch (Exception e) {
-			PvPToggle.getInstance().getLogger().info("Error occured on saving config: " + e.getMessage());
+			logger.info("Error occured on saving config: " + e.getMessage());
 		}
 	}
 }

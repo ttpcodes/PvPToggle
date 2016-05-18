@@ -14,7 +14,7 @@ public class TranslationHelper {
 		@Nullable
 		@Override
 		public ResourceBundle apply(Locale input) {
-			return ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.lang.Messages", input);
+			return ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.lang.Locale", input);
 		}
 	};
 

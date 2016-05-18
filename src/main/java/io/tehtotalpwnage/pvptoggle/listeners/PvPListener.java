@@ -23,16 +23,16 @@ public class PvPListener {
 			if (!node.getNode("players", cause.getUniqueId(), "pvp").getBoolean()) {
 				if (entityTarget.getType() == EntityTypes.PLAYER) {
 					event.setCancelled(true);
-					cause.sendMessage(TranslationHelper.t("player.attacker", cause.getLocale()));
-					cause.sendMessage(TranslationHelper.t("player.toggle", cause.getLocale()));
+					cause.sendMessage(TranslationHelper.t("text.player.attacker", cause.getLocale()));
+					cause.sendMessage(TranslationHelper.t("text.player.toggle", cause.getLocale()));
 					return;
 				}
 			} else if (entityTarget.getType() == EntityTypes.PLAYER) {
 				Player target = (Player) entityTarget;
 				if (!node.getNode("players", target.getUniqueId(), "pvp").getBoolean()) {
 						event.setCancelled(true);
-						cause.sendMessage(TranslationHelper.t("player.target", cause.getLocale()));
-						target.sendMessage(TranslationHelper.t("player.attacked", cause.getLocale()));
+						cause.sendMessage(TranslationHelper.t("text.player.target", cause.getLocale()));
+						target.sendMessage(TranslationHelper.t("text.player.attacked", cause.getLocale()));
 						return;
 				}
 			}
