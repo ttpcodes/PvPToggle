@@ -52,29 +52,32 @@ public class PvPToggle {
 		return instance;
 	}
 	
+	public static Locale locale;
+	
 	public static Set<UUID> togglePlayers = Sets.newHashSet();
 	
 	@Listener
 	public void onPreInitialization(GamePreInitializationEvent event) {
 		instance = this;
-		logger.info("Running preloading of PvPToggle version 1.0");
+		locale = Config.getInstance().loadLocale();
+		logger.info(TranslationHelper.s("string.console.preinit", locale));
 		if (!Files.exists(path)) {
-			logger.info("Config directory doesn't exist. Creating config directory...");
+			logger.info(TranslationHelper.s("string.console.createConfigDir", locale));
 			try {
 				Files.createDirectories(path);
-				logger.info("Created config directory at " + getConfigPath());
+				logger.info(TranslationHelper.s("string.console.createdConfigDir", locale, getConfigPath()));
 			} catch (Exception e) {
-				logger.error("Error occured on creating config directory: " + e.getMessage());
+				logger.error(TranslationHelper.s("string.console.errorConfigDir", locale, e.getMessage()));
 			}
 		}
 		Config.getInstance().load();
 		PlayerList.getInstance().load();
-		logger.info("Preloading completed.");
+		logger.info(TranslationHelper.s("string.console.preinitComplete", locale));
 	}
 	
 	@Listener
 	public void onInitialization(GameInitializationEvent event) {
-		logger.info("Loading PvPToggle version 1.0");
+		logger.info(TranslationHelper.s("string.console.init", locale, PluginInfo.VERSION));
 		logger.info("Registering listeners...");
 		try {
 			Sponge.getEventManager().registerListeners(this, new LoginListener());
@@ -97,7 +100,6 @@ public class PvPToggle {
 		} catch (Exception e) {
 			logger.info("Error on registering PvP command: " + e.getMessage());
 		}
-		logger.info(TranslationHelper.s("console.initComplete",
-			new Locale(Config.getInstance().getNode().getNode("locale").getValue().toString())));
+		logger.info(TranslationHelper.s("messages.console.initComplete", locale, PluginInfo.VERSION));
 	}
 }

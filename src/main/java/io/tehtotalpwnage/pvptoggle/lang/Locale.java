@@ -11,7 +11,15 @@ public class Locale extends ListResourceBundle {
 		return contents;
 	}
 	private Object[][] contents = {
+		{ "string.console.createConfig" , "%s doesn't exist. Creating config..." },
+		{ "string.console.createdConfig" , "Created new %s in config directory." },
+		{ "string.console.createConfigDir", "Config directory doesn't exist. Creating config directory..." },
+		{ "string.console.createdConfigDir", "Created config directory at %s" },
+		{ "string.console.errorConfigDir" , "Error occured on creating config directory: %s" },
+		{ "string.console.init" , "Loading PvPToggle version %s" },
+		{ "string.console.initComplete" , "PvPToggle version %s loaded successfully." },
 		{ "string.console.preinit" , "Running preloading of PvPToggle version 1.0" },
+		{ "string.console.preinitComplete" , "Preloading completed." },
 		{ "text.player.attacked" , Text.builder("A player attempted to attack you!").color(TextColors.RED).build() },
 		{ "text.player.attacker" , Text.builder("You cannot attack players while you have PvP disabled!")
 			.color(TextColors.RED).build() },
