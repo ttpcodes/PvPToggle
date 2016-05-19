@@ -30,7 +30,7 @@ public class ConfigHelper {
 				loader.save(node);
 				return node;
 			} catch (Exception e) {
-				logger.error("Error occured on creating config: " + e.getMessage());
+				logger.error(TranslationHelper.s("string.console.errorCreateConfig", locale, e.getMessage()));
 				return null;
 			}
 		} else {

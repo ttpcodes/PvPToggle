@@ -8,6 +8,7 @@ import java.util.Locale;
 import org.slf4j.Logger;
 
 import io.tehtotalpwnage.pvptoggle.PvPToggle;
+import io.tehtotalpwnage.pvptoggle.utils.TranslationHelper;
 import ninja.leaping.configurate.commented.CommentedConfigurationNode;
 import ninja.leaping.configurate.hocon.HoconConfigurationLoader;
 import ninja.leaping.configurate.loader.ConfigurationLoader;
@@ -55,7 +56,7 @@ public class Config {
 	public void populate() {
 		node.getNode("locale").setValue("en")
 			.setComment("The two letter language code for a locale. Default is 'en'.");
-		logger.info("Populated inital config at " + path);
+		logger.info(TranslationHelper.s("string.console.populate", PvPToggle.locale, file));
 	}
 	
 	public void save() {
