@@ -28,7 +28,7 @@ public class MovementListener {
 							player.sendMessage(TranslationHelper.t("text.player.commandCancelled", player.getLocale()));
 					}
 				}
-			}).delay(1, TimeUnit.SECONDS).name("PvPToggle - Get Movement Change")
+			}).delay(500, TimeUnit.MILLISECONDS).name("PvPToggle - Get Movement Change")
 			.submit(Sponge.getPluginManager().getPlugin("io.tehtotalpwnage.pvptoggle").get().getInstance().get());
 	}
 }

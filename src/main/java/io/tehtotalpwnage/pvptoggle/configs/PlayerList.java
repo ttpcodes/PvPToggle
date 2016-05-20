@@ -30,6 +30,6 @@ public class PlayerList {
 	}
 	
 	public void save() {
-		ConfigHelper.getInstance().save(loader, node);
+		ConfigHelper.getInstance().save(file, loader, node);
 	}
 }

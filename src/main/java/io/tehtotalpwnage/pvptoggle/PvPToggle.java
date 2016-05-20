@@ -60,7 +60,7 @@ public class PvPToggle {
 	public void onPreInitialization(GamePreInitializationEvent event) {
 		instance = this;
 		locale = Config.getInstance().loadLocale();
-		logger.info(TranslationHelper.s("string.console.preinit", locale));
+		logger.info(TranslationHelper.s("string.console.preinit", locale, PluginInfo.VERSION));
 		if (!Files.exists(path)) {
 			logger.info(TranslationHelper.s("string.console.createConfigDir", locale));
 			try {
@@ -78,16 +78,14 @@ public class PvPToggle {
 	@Listener
 	public void onInitialization(GameInitializationEvent event) {
 		logger.info(TranslationHelper.s("string.console.init", locale, PluginInfo.VERSION));
-		logger.info("Registering listeners...");
 		try {
 			Sponge.getEventManager().registerListeners(this, new LoginListener());
 			Sponge.getEventManager().registerListeners(this, new MovementListener());
 			Sponge.getEventManager().registerListeners(this, new PvPListener());
-			logger.info("Successfully registered listeners.");
+			logger.info(TranslationHelper.s("string.console.listener", locale));
 		} catch (Exception e) {
-			logger.info("Error on registering listeners: " + e.getMessage());
+			logger.info(TranslationHelper.s("string.console.listenerError", locale, e.getMessage()));
 		}
-		logger.info("Registering PvP command...");
 		try {
 			CommandSpec toggle = CommandSpec.builder()
 				.description(Text.of("Toggles PvP status for the player."))
@@ -96,10 +94,10 @@ public class PvPToggle {
 				.executor(new CommandToggle())
 				.build();
 			Sponge.getCommandManager().register(this, toggle, "pvp");
-			logger.info("Successfully registered command.");
+			logger.info(TranslationHelper.s("string.console.command", locale));
 		} catch (Exception e) {
-			logger.info("Error on registering PvP command: " + e.getMessage());
+			logger.info(TranslationHelper.s("string.console.commandError", locale, e.getMessage()));
 		}
-		logger.info(TranslationHelper.s("messages.console.initComplete", locale, PluginInfo.VERSION));
+		logger.info(TranslationHelper.s("string.console.initComplete", locale, PluginInfo.VERSION));
 	}
 }

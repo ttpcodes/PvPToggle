@@ -8,6 +8,7 @@ import java.util.function.Function;
 import javax.annotation.Nullable;
 
 import org.spongepowered.api.text.Text;
+import org.spongepowered.api.text.TextTemplate;
 import org.spongepowered.api.text.translation.ResourceBundleTranslation;
 import org.spongepowered.api.text.translation.Translatable;
 
@@ -45,8 +46,13 @@ public class TranslationHelper {
 //	}
 	
 	public static Text t(String key, Locale locale, Object... args) {
-		ResourceBundle bundle =  ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.lang.Messages", locale);
+		ResourceBundle bundle =  ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.lang.Locale", locale);
 		return (Text) bundle.getObject(key);
+	}
+	
+	public static TextTemplate tt(String key, Locale locale, Object... args) {
+		ResourceBundle bundle =  ResourceBundle.getBundle("io.tehtotalpwnage.pvptoggle.lang.Locale", locale);
+		return (TextTemplate) bundle.getObject(key);
 	}
 
 }

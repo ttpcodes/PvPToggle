@@ -30,29 +30,28 @@ public class ConfigHelper {
 				loader.save(node);
 				return node;
 			} catch (Exception e) {
-				logger.error(TranslationHelper.s("string.console.errorCreateConfig", locale, e.getMessage()));
+				logger.error(TranslationHelper.s("string.console.errorCreateConfig", locale, file, e.getMessage()));
 				return null;
 			}
 		} else {
 			try {
 				CommentedConfigurationNode node = loader.load();
 				loader.save(node);
-				logger.info("Config loaded from " + path);
+				logger.info(TranslationHelper.s("string.console.load", locale, file));
 				return node;
 			} catch (Exception e) {
-				logger.error("Error occured on loading config: " + e.getMessage());
+				logger.error(TranslationHelper.s("string.console.loadError", locale, file, e.getMessage()));
 				return null;
 			}
 		}
 	}
 
-	public void save(ConfigurationLoader<CommentedConfigurationNode> loader, CommentedConfigurationNode node) {
+	public void save(String file, ConfigurationLoader<CommentedConfigurationNode> loader, CommentedConfigurationNode node) {
 		try {
-			logger.info("Saving config...");
 			loader.save(node);
-			logger.info("Config saved.");
+			logger.info(TranslationHelper.s("string.console.save", locale, file));
 		} catch (Exception e) {
-			logger.info("Error occured on saving config: " + e.getMessage());
+			logger.info(TranslationHelper.s("string.console.saveError", locale, file, e.getMessage()));
 		}
 	}
 }

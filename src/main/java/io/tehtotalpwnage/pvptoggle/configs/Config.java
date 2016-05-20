@@ -60,12 +60,6 @@ public class Config {
 	}
 	
 	public void save() {
-		try {
-			logger.info("Saving config...");
-			loader.save(node);
-			logger.info("Config saved.");
-		} catch (Exception e) {
-			logger.info("Error occured on saving config: " + e.getMessage());
-		}
+		ConfigHelper.getInstance().save(file, loader, node);
 	}
 }
