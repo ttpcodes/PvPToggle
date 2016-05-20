@@ -4,9 +4,9 @@ PvPToggle is a simple plugin that adds only one functionality: the ability for p
 
 `/pvp - pvptoggle.toggle - Toggles the PvP status of the player.`
 
-To toggle other players' PvP status, this command can also be run from the server console or from a command block:
+To toggle other players' PvP status, this command can also be run from the server console, a command block, or any server admin that has the associated permission node:
 
-`/pvp [<player>] - Toggles the PvP status of the indicated player.`
+`/pvp [<player>] - pvptoggle.others - Toggles the PvP status of the indicated player.`
 
 Downloads can be found on Ore.
 
@@ -15,15 +15,10 @@ This is my first plugin, so I am not very familiar with the SpongeAPI, and it's 
 ## Current Features (On Latest Release)
 
 * Adds a /pvp command and permission node to toggle PvP status.
-* Allows for other players' PvP status to be toggled via command block and console.
+* Allows for other players' PvP status to be toggled.
 * Notifies players if PvP is disabled or if a player cannot be attacked.
 * Listens for movement to prevent players from toggling PvP in a combat situation.
 * Supports translations!
-
-## Currently Planned
-
-* Rewriting code to be more efficient.
-* Adding configuration file to configure various aspects of plugin.
 
 ### Translations
 

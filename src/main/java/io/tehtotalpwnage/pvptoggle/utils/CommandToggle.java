@@ -27,7 +27,7 @@ public class CommandToggle implements CommandExecutor {
 		Optional<Player> optionalPlayer = args.<Player> getOne("player");
 		if (src instanceof Player) {
 			Player player = (Player) src;
-			if (optionalPlayer.isPresent() && src.hasPermission("pvp.toggle.others")) {
+			if (optionalPlayer.isPresent() && src.hasPermission("pvptoggle.others")) {
 				Player target = optionalPlayer.get();
 				toggleOthers(target);
 				player.sendMessage(TranslationHelper.tt("textTemplate.generic.toggle", locale)
