@@ -12,6 +12,15 @@ Downloads can be found on Ore.
 
 This is my first plugin, so I am not very familiar with the SpongeAPI, and it's been a while since I've worked with actual Java code. Please feel free to provide any feedback, report issues, suggest changes in the code, as well as recommend new features.
 
+## Installation Instructions
+
+1. Download the plugin from Ore Staging [here](https://ore-staging.spongepowered.org/TehTotalPwnage/PvPToggle).
+2. Extract the JAR file from the downloaded ZIP.
+3. Drop the ZIP into your mods folder on the server.
+4. Make sure PvP is enabled in server.properties.
+5. That's it! Everything should be good to go!
+
+
 ## Current Features (On Latest Release)
 
 * Adds a /pvp command and permission node to toggle PvP status.
