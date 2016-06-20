@@ -15,16 +15,17 @@ import ninja.leaping.configurate.ConfigurationNode;
 public class PvPListener {
 	
 	@Listener
-	public void onDamageEntity(DamageEntityEvent event, @First IndirectEntityDamageSource source) {
+	public void onDamageEntity(DamageEntityEvent event, @First EntityDamageSource source) {
+//		Optional<IndirectEntityDamageSource> secondSource = event.getCause().first(IndirectEntityDamageSource.class);
 		ConfigurationNode node = PlayerList.getInstance().getNode();
 		Entity entityTarget = event.getTargetEntity();
 		if (source.getSource().getType() == EntityTypes.PLAYER || (source.getSource().getType() == EntityTypes.ARROW
-			&& source.getIndirectSource().getType() == EntityTypes.PLAYER)) {
+			&& event.getCause().first(IndirectEntityDamageSource.class).get().getIndirectSource().getType() == EntityTypes.PLAYER)) {
 				Player cause = null;
 				if (source.getSource().getType() == EntityTypes.PLAYER) {
 					cause = (Player) source.getSource();
 				} else {
-					cause = (Player) source.getIndirectSource();
+					cause = (Player) event.getCause().first(IndirectEntityDamageSource.class).get().getIndirectSource();
 				}
 				if (!node.getNode("players", cause.getUniqueId(), "pvp").getBoolean()) {
 					if (entityTarget.getType() == EntityTypes.PLAYER) {
@@ -42,27 +43,6 @@ public class PvPListener {
 						return;
 					}
 				}
-/*			} else if (source.getSource().getType() == EntityTypes.ARROW) {
-				IndirectEntityDamageSource arrowSource = event.getCause().last(IndirectEntityDamageSource.class).get();
-				if (arrowSource.getIndirectSource().getType() == EntityTypes.PLAYER) {
-					Player cause = (Player) arrowSource.getIndirectSource();
-				if (!node.getNode("players", cause.getUniqueId(), "pvp").getBoolean()) {
-					if (entityTarget.getType() == EntityTypes.PLAYER) {
-						event.setCancelled(true);
-						cause.sendMessage(TranslationHelper.t("text.player.attacker", cause.getLocale()));
-						cause.sendMessage(TranslationHelper.t("text.player.toggle", cause.getLocale()));
-						return;
-					}
-				} else if (entityTarget.getType() == EntityTypes.PLAYER) {
-					Player target = (Player) entityTarget;
-					if (!node.getNode("players", target.getUniqueId(), "pvp").getBoolean()) {
-							event.setCancelled(true);
-							cause.sendMessage(TranslationHelper.t("text.player.target", cause.getLocale()));
-							target.sendMessage(TranslationHelper.t("text.player.attacked", cause.getLocale()));
-							return;
-					}
-				}
-			} */
 		}
 	}
 }
